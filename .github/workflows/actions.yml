@@ -1,0 +1,27 @@
+name: Deploy to Play-with-Docker
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Create package
+      run: |
+        mkdir deploy
+        cp index.html deploy/
+        cp styles.css deploy/
+        cp script.js deploy/
+        cp docker-compose.yml deploy/
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-files
+        path: deploy/
